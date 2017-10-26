@@ -21,4 +21,17 @@ df = pdr.DataReader("AAPL", 'yahoo', three_yrs_ago, today)
 
 print(df)
 #get a list of close values within the time period for the calculation for Sharpe ratio 
-print(list(df['Close']))
+#print(list(df['Close']))
+
+returnList = []
+
+#calculate the average returns based on the current day's price and the previous day price 
+for i in range(len(list(df['Close']))): 
+    if(i < len(list(df['Close'])) - 1):
+        first = list(df['Close'])[i]
+        second = list(df['Close'])[i + 1]
+        averageReturn = (second - first) / first 
+        returnList.append(averageReturn)
+
+print(returnList)
+  
