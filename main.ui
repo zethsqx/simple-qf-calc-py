@@ -26,7 +26,7 @@
       <x>10</x>
       <y>30</y>
       <width>951</width>
-      <height>271</height>
+      <height>521</height>
      </rect>
     </property>
     <property name="dragDropOverwriteMode">
@@ -84,8 +84,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
-      <width>91</width>
+      <y>560</y>
+      <width>321</width>
       <height>61</height>
      </rect>
     </property>
@@ -97,7 +97,7 @@
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>320</y>
+      <y>570</y>
       <width>311</width>
       <height>61</height>
      </rect>
@@ -123,8 +123,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>350</y>
-      <width>119</width>
+      <y>620</y>
+      <width>281</width>
       <height>39</height>
      </rect>
     </property>
@@ -136,7 +136,7 @@
      <x>0</x>
      <y>0</y>
      <width>986</width>
-     <height>19</height>
+     <height>47</height>
     </rect>
    </property>
   </widget>

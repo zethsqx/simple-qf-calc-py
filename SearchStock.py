@@ -32,5 +32,6 @@ def scan_file(path_to_file, word):
             if re.search(r'^'+word+'(.*?)$', _stockInfo[0], re.IGNORECASE):
                 all_data[_stockInfo[0]] = _stockInfo[1].strip('\n')
     eFile.close()
-    print(all_data)
+    return all_data
+    #print(all_data)
     
