@@ -15,8 +15,8 @@ def getStock(stock):
     #then = today - datetime.timedelta(days=3*365)
     noOfYears = 3
     three_yrs_ago = datetime.now() - relativedelta(years=noOfYears)
-    print (today)
-    print(three_yrs_ago)
+    #print (today)
+    #print(three_yrs_ago)
     #stock=pdr.get_data_google('AAPL',three_yrs_ago, today)
     
     #EXAMPLE- retrieve data for Apple
@@ -51,11 +51,11 @@ def sharpe(returns):
     return (Mean_Return - Risk_Free)/(Risk);
 
 #simple calculation for double checking
-stockList = getStock("AAPL")
-print("Mean", np.mean(stockList))
-print("Std", np.std(stockList))
+#stockList = getStock("AAPL")
+#print("Mean", np.mean(stockList))
+#print("Std", np.std(stockList))
 
-value = sharpe(stockList)
-print("sharpe ratio:", value)
+#value = sharpe(stockList)
+#print("sharpe ratio:", value)
     
 
