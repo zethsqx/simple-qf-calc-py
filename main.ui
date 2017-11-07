@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1703</width>
-    <height>809</height>
+    <width>1440</width>
+    <height>793</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -23,10 +23,10 @@
    <widget class="QTableWidget" name="portfolioTable">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>951</width>
-      <height>521</height>
+      <x>12</x>
+      <y>12</y>
+      <width>711</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -128,49 +128,26 @@
      </property>
     </column>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>560</y>
-      <width>321</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Enter your Stock:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="searchButton">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>570</y>
-      <width>271</width>
-      <height>131</height>
+      <x>240</x>
+      <y>340</y>
+      <width>91</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string>Search</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="stockName">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>620</y>
-      <width>291</width>
-      <height>39</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="deleteButton">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>570</y>
-      <width>341</width>
-      <height>61</height>
+      <x>550</x>
+      <y>340</y>
+      <width>91</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -180,10 +157,10 @@
    <widget class="QPushButton" name="testButton">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>640</y>
-      <width>341</width>
-      <height>61</height>
+      <x>630</x>
+      <y>340</y>
+      <width>91</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -193,10 +170,10 @@
    <widget class="QTableWidget" name="portfolioTable_2">
     <property name="geometry">
      <rect>
-      <x>980</x>
-      <y>170</y>
-      <width>701</width>
-      <height>521</height>
+      <x>740</x>
+      <y>50</y>
+      <width>452</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -291,10 +268,10 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>990</x>
-      <y>20</y>
-      <width>371</width>
-      <height>51</height>
+      <x>740</x>
+      <y>10</y>
+      <width>118</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -309,10 +286,10 @@
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
-      <x>1500</x>
-      <y>70</y>
-      <width>181</width>
-      <height>91</height>
+      <x>1110</x>
+      <y>10</y>
+      <width>64</width>
+      <height>23</height>
      </rect>
     </property>
     <property name="segmentStyle">
@@ -322,10 +299,10 @@
    <widget class="QLabel" name="investLabel">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>80</y>
-      <width>331</width>
-      <height>51</height>
+      <x>840</x>
+      <y>30</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -340,10 +317,10 @@
    <widget class="QLabel" name="investLabel_2">
     <property name="geometry">
      <rect>
-      <x>990</x>
-      <y>70</y>
-      <width>21</width>
-      <height>61</height>
+      <x>740</x>
+      <y>30</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -358,10 +335,10 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>1420</x>
-      <y>20</y>
-      <width>261</width>
-      <height>51</height>
+      <x>1020</x>
+      <y>10</y>
+      <width>80</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -373,14 +350,37 @@
      <string>No. of Stocks:</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>12</x>
+      <y>350</y>
+      <width>90</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Enter your Stock:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="stockName">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>350</y>
+      <width>125</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1703</width>
-     <height>47</height>
+     <width>1440</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
