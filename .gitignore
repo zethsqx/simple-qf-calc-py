@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 \.idea/misc\.xml
 
@@ -10,3 +11,6 @@
 \.idea/workspace\.xml
 
 test\.py
+=======
+__pycache__/
+>>>>>>> master
