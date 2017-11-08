@@ -1,24 +1,32 @@
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5 import uic
+from PyQt5 import uic, QtCore
 import math
 import StockReader
+import StockAllocation
 import SearchStock
 import multiprocessing
 
+QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 ui_MW, QtBaseClass = uic.loadUiType("Main.ui")
 ui_SL, QtBaseClass = uic.loadUiType("StockList.ui")
+ui_IV, QtBaseClass = uic.loadUiType("Investment.ui")
 
+#Main Window 
 class Ui_MainWindow(QMainWindow, ui_MW):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
         self.setupUi(self)
         self.searchButton.clicked.connect(self.openStockDialog)
         self.deleteButton.clicked.connect(self.deleteStock)
-        self.testButton.clicked.connect(self.getSharpeList)
+        self.investButton.clicked.connect(self.openInvestmentDialog)
     
     def openStockDialog(self):
         self.dialog = Ui_StockDialog(self, self.stockName.text())
+        self.dialog.show()
+
+    def openInvestmentDialog(self):
+        self.dialog = Ui_InvestmentDialog(self)
         self.dialog.show()
 
     def deleteStock(self):
@@ -30,13 +38,15 @@ class Ui_MainWindow(QMainWindow, ui_MW):
                 self.portfolioTable.setItem(i, 2, QTableWidgetItem(self.portfolioTable.item(i,2)))
                 self.portfolioTable.setItem(i, 3, QTableWidgetItem(self.portfolioTable.item(i,3)))
 
-    def getSharpeList(self):
-        sharpelist = []
+    def getSharpeDict(self):
+        sharpelist = {}
         for i in range(0, self.portfolioTable.rowCount()):
-            sharpelist.append(self.portfolioTable.item(i,3).text())
+            sharpelist.update({self.portfolioTable.item(i,1).text():float(self.portfolioTable.item(i,3).text())})
+        print("Gotten your SHARPEDICT")
         print(sharpelist)
         return sharpelist
-        
+
+# Dialog for selecting the stock
 class Ui_StockDialog(QDialog, ui_SL):
     def __init__(self, parent=None, data=None):
         super(Ui_StockDialog, self).__init__(parent)
@@ -44,12 +54,7 @@ class Ui_StockDialog(QDialog, ui_SL):
         self.setTableData(data)
         self.show()
         
-        ############################    
-        #self.pool = multiprocessing.Pool(processes=(multiprocessing.cpu_count() - 1) * 2)        
-        #self.okButton.clicked.connect(self.startMultiProcessing)
-        ###########################
-        
-        self.okButton.clicked.connect(self.selectStock)
+        self.okButton.clicked.connect(self.okBtn)
         self.cancelButton.clicked.connect(self.closeDialog)
         
     def setTableData(self, data):
@@ -62,22 +67,11 @@ class Ui_StockDialog(QDialog, ui_SL):
             self.stocklistTable.setItem(index, 1, QTableWidgetItem(value.strip("\"")))
             index+=1
             
-    ##########################        
-    #def startMultiProcessing(self):
-        #self.results = self.pool.apply_async(self.selectStock)
-    ##########################
-        
-    def selectStock(self):
+    def okBtn(self):
         if self.stocklistTable.itemClicked:
             index = self.stocklistTable.selectedIndexes()
             symbol = index[0].data()
             stockname = index[1].data()
-
-            #########################
-            #stockList = StockReader.getStock(symbol)
-            #sharpeRatio = StockReader.sharpe(stockList)
-            #return [symbol, stockname, sharpeRatio]
-            #########################
             
             stockList = StockReader.getStock(symbol)
             sharpeRatio = StockReader.sharpe(stockList)
@@ -93,21 +87,51 @@ class Ui_StockDialog(QDialog, ui_SL):
             return self.accept()
             
     def closeDialog(self):
-        ###############################
-        #self.pool.close()
-        #self.pool.join()
-        #print(self.results.items.get)
-        #for v in self.results:
-            #print(v.get())
-            #r = v.get()
-            #main = self.parent()
-            #row = main.portfolioTable.rowCount()
-            #main.portfolioTable.insertRow(row)
-            #main.portfolioTable.setItem(row, 0, QTableWidgetItem(str(row+1)))
-            #main.portfolioTable.setItem(row, 1, QTableWidgetItem(r[0]))
-            #main.portfolioTable.setItem(row, 2, QTableWidgetItem(r[1]))
-            #main.portfolioTable.setItem(row, 3, QTableWidgetItem(str(r[2])))
-        ###############################
+        return self.accept()
+
+#Dialog for inputting investment amount and stock amt
+class Ui_InvestmentDialog(QDialog, ui_IV):
+    global CURRDIAL
+    CURRDIAL = 0
+    def __init__(self, parent=None):
+        super(Ui_InvestmentDialog, self).__init__(parent)
+        self.setupUi(self)
+        self.show()
+
+        self.stockDial.sliderMoved.connect(self.changeValue)
+        self.okButton.clicked.connect(self.okBtn)
+        self.cancelButton.clicked.connect(self.closeDialog)
+
+    def okBtn(self):
+        main = self.parent()
+        main.stockLCD.display(self.stockAmt.text())
+        main.investLabel.setText(self.investAmt.text())
+
+        resultDict = StockAllocation.getInvestDecision(main.getSharpeDict(), int(self.stockAmt.text()), float(self.investAmt.text()))
+
+        main.investTable.clear()
+        main.investTable.setRowCount(0)
+        i = 0
+        for k,v in resultDict.items():
+            main.investTable.insertRow(i)
+            main.investTable.setItem(i, 0, QTableWidgetItem(str(k)))
+            main.investTable.setItem(i, 1, QTableWidgetItem(str(v)))
+            i += 1
+            
+        return self.accept()
+    
+    def changeValue(self):
+        global CURRDIAL
+        if self.stockDial.value() > CURRDIAL:
+            self.stockAmt.setText(str(int(self.stockAmt.text())+1))
+        else:
+            val = int(self.stockAmt.text()) - 1
+            self.stockAmt.setText(str(val))
+            if val <= 0:
+                self.stockAmt.setText(str(0))
+        CURRDIAL = self.stockDial.value()
+
+    def closeDialog(self):
         return self.accept()
 
 def main():

@@ -12,14 +12,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
-    <height>572</height>
+    <width>533</width>
+    <height>412</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>533</width>
+    <height>412</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>548</width>
-    <height>572</height>
+    <width>533</width>
+    <height>412</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -28,10 +34,10 @@
   <widget class="QPushButton" name="okButton">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>460</y>
+     <x>20</x>
+     <y>350</y>
      <width>241</width>
-     <height>81</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -42,9 +48,9 @@
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>460</y>
+     <y>350</y>
      <width>241</width>
-     <height>81</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -63,7 +69,7 @@
      <x>20</x>
      <y>20</y>
      <width>501</width>
-     <height>431</height>
+     <height>321</height>
     </rect>
    </property>
    <property name="editTriggers">
