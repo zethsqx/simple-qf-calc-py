@@ -6,6 +6,7 @@ import StockReader
 import StockAllocation
 import SearchStock
 import multiprocessing
+from CustomExceptions import *
 
 QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 ui_MW, QtBaseClass = uic.loadUiType("Main.ui")
@@ -59,6 +60,8 @@ class Ui_StockDialog(QDialog, ui_SL):
         
     def setTableData(self, data):
         stocklist = SearchStock.scan_file('stocklist.csv',data)
+        if len(stocklist) == 0:
+            raise StockNotFoundException('Stock symbol not found','')
         index = 0
         for key, value in stocklist.items():
             #print(key, value, index)
