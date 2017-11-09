@@ -100,4 +100,11 @@ class Validation(Object){
 			# catastrophic error. bail.
 			print err
 			sys.exit(1)
+			
+	def validAPI(url):
+		try:
+			stockData = DataReader(ticker, 'yahoo', datetime(2015, 1, 1), datetime.today())
+		except RemoteDataError:
+			# handle error
+			print('Please wait for a while!(:')
 }
