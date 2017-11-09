@@ -6,6 +6,7 @@ import StockReader
 import StockAllocation
 import SearchStock
 import multiprocessing
+import pyqtgraph as pg
 from CustomExceptions import *
 
 QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -21,6 +22,7 @@ class Ui_MainWindow(QMainWindow, ui_MW):
         self.searchButton.clicked.connect(self.openStockDialog)
         self.deleteButton.clicked.connect(self.deleteStock)
         self.investButton.clicked.connect(self.openInvestmentDialog)
+        self.portfolioTable.itemDoubleClicked.connect(self.showGraph)
     
     def openStockDialog(self):
         self.dialog = Ui_StockDialog(self, self.stockName.text())
@@ -43,9 +45,15 @@ class Ui_MainWindow(QMainWindow, ui_MW):
         sharpelist = {}
         for i in range(0, self.portfolioTable.rowCount()):
             sharpelist.update({self.portfolioTable.item(i,1).text():float(self.portfolioTable.item(i,3).text())})
-        print("Gotten your SHARPEDICT")
-        print(sharpelist)
+        #print("Gotten your SHARPEDICT")
+        #print(sharpelist)
         return sharpelist
+
+    def showGraph(self):
+        index = self.portfolioTable.selectedIndexes()
+        symbol = index[1].data()
+        ts = StockReader.getStockDF(symbol).plot()
+        plt.show()
 
 # Dialog for selecting the stock
 class Ui_StockDialog(QDialog, ui_SL):
