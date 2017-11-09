@@ -7,6 +7,7 @@ import StockAllocation
 import SearchStock
 import multiprocessing
 import pyqtgraph as pg
+import matplotlib.pyplot as plt
 from CustomExceptions import *
 
 QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
