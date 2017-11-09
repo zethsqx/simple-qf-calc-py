@@ -25,12 +25,22 @@ class Ui_MainWindow(QMainWindow, ui_MW):
         self.portfolioTable.itemDoubleClicked.connect(self.showGraph)
     
     def openStockDialog(self):
-        self.dialog = Ui_StockDialog(self, self.stockName.text())
-        self.dialog.show()
+        self.dialog = None
+        try:
+            self.dialog = Ui_StockDialog(self, self.stockName.text())
+            self.dialog.show()
+        except ApplicationException:
+            msg = QMessageBox.question(self,'No Stock Found',"Sorry, we couldn't find what you were looking for.", QMessageBox.Ok   )
+            self.show()
+
 
     def openInvestmentDialog(self):
-        self.dialog = Ui_InvestmentDialog(self)
-        self.dialog.show()
+        try:
+            self.dialog = Ui_InvestmentDialog(self)
+            self.dialog.show()
+        except ApplicationException:
+            msg = QMessageBox.question(self, 'Not enough stock', "You are assigning more stocks than what you have on your list.",QMessageBox.Ok)
+            self.show()
 
     def deleteStock(self):
         if self.portfolioTable.itemClicked:
@@ -69,7 +79,7 @@ class Ui_StockDialog(QDialog, ui_SL):
     def setTableData(self, data):
         stocklist = SearchStock.scan_file('stocklist.csv',data)
         if len(stocklist) == 0:
-            raise StockNotFoundException('Stock symbol not found','')
+            raise ApplicationException('Stock symbol not found','')
         index = 0
         for key, value in stocklist.items():
             #print(key, value, index)
@@ -83,19 +93,23 @@ class Ui_StockDialog(QDialog, ui_SL):
             index = self.stocklistTable.selectedIndexes()
             symbol = index[0].data()
             stockname = index[1].data()
-            
-            stockList = StockReader.getStock(symbol)
-            sharpeRatio = StockReader.sharpe(stockList)
-            #print(sharpeRatio)
-            
-            main = self.parent()
-            row = main.portfolioTable.rowCount()
-            main.portfolioTable.insertRow(row)
-            main.portfolioTable.setItem(row, 0, QTableWidgetItem(str(row+1)))
-            main.portfolioTable.setItem(row, 1, QTableWidgetItem(symbol))
-            main.portfolioTable.setItem(row, 2, QTableWidgetItem(stockname))
-            main.portfolioTable.setItem(row, 3, QTableWidgetItem(str(sharpeRatio)))
-            return self.accept()
+
+            try:
+                stockList = StockReader.getStock(symbol)
+                sharpeRatio = StockReader.sharpe(stockList)
+                #print(sharpeRatio)
+
+                main = self.parent()
+                row = main.portfolioTable.rowCount()
+                main.portfolioTable.insertRow(row)
+                main.portfolioTable.setItem(row, 0, QTableWidgetItem(str(row+1)))
+                main.portfolioTable.setItem(row, 1, QTableWidgetItem(symbol))
+                main.portfolioTable.setItem(row, 2, QTableWidgetItem(stockname))
+                main.portfolioTable.setItem(row, 3, QTableWidgetItem(str(sharpeRatio)))
+                return self.accept()
+            except:
+                msg = QMessageBox.question(self, 'API Call limit',"Please wait a while...", QMessageBox.Ok)
+                self.show()
             
     def closeDialog(self):
         return self.accept()
@@ -117,19 +131,22 @@ class Ui_InvestmentDialog(QDialog, ui_IV):
         main = self.parent()
         main.stockLCD.display(self.stockAmt.text())
         main.investLabel.setText(self.investAmt.text())
+        try:
+            resultDict = StockAllocation.getInvestDecision(main.getSharpeDict(), int(self.stockAmt.text()), float(self.investAmt.text()))
 
-        resultDict = StockAllocation.getInvestDecision(main.getSharpeDict(), int(self.stockAmt.text()), float(self.investAmt.text()))
+            main.investTable.clear()
+            main.investTable.setRowCount(0)
+            i = 0
+            for k,v in resultDict.items():
+                main.investTable.insertRow(i)
+                main.investTable.setItem(i, 0, QTableWidgetItem(str(k)))
+                main.investTable.setItem(i, 1, QTableWidgetItem(str(v)))
+                i += 1
 
-        main.investTable.clear()
-        main.investTable.setRowCount(0)
-        i = 0
-        for k,v in resultDict.items():
-            main.investTable.insertRow(i)
-            main.investTable.setItem(i, 0, QTableWidgetItem(str(k)))
-            main.investTable.setItem(i, 1, QTableWidgetItem(str(v)))
-            i += 1
-            
-        return self.accept()
+            return self.accept()
+        except IndexError:
+            msg = QMessageBox.question(self, 'Not Enough Stocks', "You do not have enough stocks", QMessageBox.Ok)
+            self.show()
     
     def changeValue(self):
         global CURRDIAL
