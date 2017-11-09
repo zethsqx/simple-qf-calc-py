@@ -76,7 +76,7 @@ def covMatrix(stockList):
         a = getStock(stockList[0])
         b = getStock(stockList[1])
         vStackArray = np.vstack((a,b))
-        for i in range(2,len(stockList))):
+        for i in range(2,len(stockList)):
             currentStock = getStock(stockList[i])
             vStackArray = np.vstack((vStackArray,currentStock))
     return np.cov(vStackArray,ddof=0)
