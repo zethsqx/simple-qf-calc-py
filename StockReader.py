@@ -9,6 +9,7 @@ import numpy as np
 import quandl
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from CustomExceptions import *
 
 def getStock(stock):
     ##today = datetime.now()
@@ -44,7 +45,12 @@ def getStockDF(stock):
     three_yrs_ago = datetime.now() - relativedelta(years=noOfYears)
     
     #EXAMPLE- retrieve data for Apple
-    df = pdr.DataReader(stock, 'yahoo', three_yrs_ago, today)
+
+    df = None
+    try:
+        df = pdr.DataReader(stock, 'yahoo', three_yrs_ago, today)
+    except RemoteDataError:
+        raise ApplicationException('Too many API requests','')
     return df
           
 def sharpe(returns):
