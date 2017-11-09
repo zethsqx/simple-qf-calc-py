@@ -6,6 +6,8 @@ Created on Thu Nov  2 23:27:15 2017
 """
 from copy import deepcopy
 
+PercentageGlobalMap = {}
+
 def getInvestDecision(StockMap, selection, Amount):
     #StockMap = {'AAPL': -0.882234433136, 'MSFT': -0.895106903701, 'AZPN': -0.767119686675}
     s = sorted(StockMap.items(), key=lambda x: x[1], reverse = True) #sorting by value - descending; if reverse = false, its ascending 
@@ -29,7 +31,9 @@ def getInvestDecision(StockMap, selection, Amount):
     for k,v in PercentageMap.items():
         Weightage = v/Total_Sharpe
         PercentageMap.update({k:Weightage})
-        
+    
+    global PercentageGlobalMap
+    PercentageGlobalMap = PercentageMap 
     print (PercentageMap)
 
     #for example if user enter $100,000 into Amount
@@ -44,3 +48,4 @@ def getInvestDecision(StockMap, selection, Amount):
     return AllocationMap
 
 #getInvestDecision({'AAPL': -0.882234433136, 'MSFT': -0.895106903701, 'AZPN': -0.767119686675}, 1212)
+

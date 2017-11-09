@@ -9,6 +9,9 @@ import numpy as np
 import quandl
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from CustomExceptions import *
+
+stockGlobalMap = {}
 
 def getStock(stock):
     ##today = datetime.now()
@@ -22,8 +25,8 @@ def getStock(stock):
     #EXAMPLE- retrieve data for Apple
     ##df = pdr.DataReader(stock, 'yahoo', three_yrs_ago, today) 
     
-#    print(df)
     df = getStockDF(stock)
+    #    print(df)
     
     returnList = []
 
@@ -35,16 +38,23 @@ def getStock(stock):
             second = list(df['Close'])[i + 1]
             averageReturn = (second - first) / first 
             returnList.append(averageReturn)
-    
+        
+    global stockGlobalMap #declaring it global to update the list for access 
+    stockGlobalMap.update({stock:returnList})
+#    stockGlobalMap[stock] = returnList
     return returnList;
 
 def getStockDF(stock):
     today = datetime.now()
-    noOfYears = 3
-    three_yrs_ago = datetime.now() - relativedelta(years=noOfYears)
+    noOfYears = 1
+    one_year_ago = datetime.now() - relativedelta(years=noOfYears)
     
     #EXAMPLE- retrieve data for Apple
-    df = pdr.DataReader(stock, 'yahoo', three_yrs_ago, today)
+#    df = pdr.DataReader(stock, 'yahoo', one_year_ago, today)
+    try:
+        df = pdr.DataReader(stock, 'yahoo', one_year_ago, today)
+    except RemoteDataError:
+        raise ApplicationException('Too many API requests','')
     return df
           
 def sharpe(returns):
@@ -53,15 +63,17 @@ def sharpe(returns):
     Risk is calculated using Standard Deviation. Essentially, sharpe ratio is interpreted as amount of return per unit of risk. 
     The higher the sharpe ratio, the better. 
     Risk free rate is based on US 1-year treasury bill.
+    252 is the number of trading days in a year for annualisation 
     """
-    Mean_Return = (np.mean(returns))*100
+    Mean_Return = (np.mean(returns))*100*252
     rf = quandl.get("FRED/TB1YR", authtoken="VV_5NSuUzyPxy8sgZkzp")
     Risk_Free = (rf['Value'][-1])
-    Risk = (np.std(returns))*100
-    return (Mean_Return - Risk_Free)/(Risk);
+    Risk = (np.std(returns))*100*((252)**0.5)
+    return (Mean_Return - Risk_Free)/(Risk)
 
 #simple calculation for double checking
 #stockList = getStock("AAPL")
+#print(stockGlobalMap)
 #print("Mean", np.mean(stockList))
 #print("Std", np.std(stockList))
 
