@@ -11,18 +11,19 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 def getStock(stock):
-    today = datetime.now()
+    ##today = datetime.now()
     #then = today - datetime.timedelta(days=3*365)
-    noOfYears = 3
-    three_yrs_ago = datetime.now() - relativedelta(years=noOfYears)
+    ##noOfYears = 3
+    ##three_yrs_ago = datetime.now() - relativedelta(years=noOfYears)
     #print (today)
     #print(three_yrs_ago)
     #stock=pdr.get_data_google('AAPL',three_yrs_ago, today)
     
     #EXAMPLE- retrieve data for Apple
-    df = pdr.DataReader(stock, 'yahoo', three_yrs_ago, today) 
+    ##df = pdr.DataReader(stock, 'yahoo', three_yrs_ago, today) 
     
 #    print(df)
+    df = getStockDF(stock)
     
     returnList = []
 
@@ -36,6 +37,15 @@ def getStock(stock):
             returnList.append(averageReturn)
     
     return returnList;
+
+def getStockDF(stock):
+    today = datetime.now()
+    noOfYears = 3
+    three_yrs_ago = datetime.now() - relativedelta(years=noOfYears)
+    
+    #EXAMPLE- retrieve data for Apple
+    df = pdr.DataReader(stock, 'yahoo', three_yrs_ago, today)
+    return df
           
 def sharpe(returns):
     """
