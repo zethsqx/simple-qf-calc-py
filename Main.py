@@ -9,6 +9,7 @@ import multiprocessing
 import pyqtgraph as pg
 import matplotlib.pyplot as plt
 import datetime
+import time
 from CustomExceptions import *
 
 QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -25,11 +26,13 @@ class Ui_MainWindow(QMainWindow, ui_MW):
         self.deleteButton.clicked.connect(self.deleteStock)
         self.investButton.clicked.connect(self.openInvestmentDialog)
         self.portfolioTable.itemDoubleClicked.connect(self.showGraph)
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(1000);
+        self.timer.timeout.connect(self.setDateTime)
+        self.timer.start()
     
-    #def setDateTime(self):
-        #while True:
-            #now = datetime.datetime.now()
-            #self.datetimeLabel.setText("1")
+    def setDateTime(self):
+        self.dtLabel.setText(time.ctime())
     
     def openStockDialog(self):
         self.dialog = None
