@@ -26,11 +26,38 @@ class Ui_MainWindow(QMainWindow, ui_MW):
         self.deleteButton.clicked.connect(self.deleteStock)
         self.investButton.clicked.connect(self.openInvestmentDialog)
         self.portfolioTable.itemDoubleClicked.connect(self.showGraph)
+        
         self.timer = QtCore.QTimer()
         self.timer.setInterval(1000);
         self.timer.timeout.connect(self.setDateTime)
         self.timer.start()
+        
+        self.timer2 = QtCore.QTimer()
+        self.walker = "(,°.°),"
+        self.space = "                                    "
+        self.table = "┬─┬"
+        self.xVal=-1
+        self.yVal=0
+        self.zVal=0
+        self.timer2.setInterval(300);
+        self.timer2.timeout.connect(self.startWalking)
+        self.timer2.start()
     
+    def startWalking(self):
+        if self.xVal == -37:
+            self.walker = "(╯°□°)╯"
+        elif self.xVal == -38:
+            self.table = "︵┻━┻"
+        self.xVal +=-1
+        self.fliptable.setText(self.space[self.xVal:] + self.walker[self.xVal:] + self.space[:self.xVal] + self.table)
+        if "(╯°□°)╯︵┻━┻" in self.fliptable.text():
+            self.walker = "(,°.°),"
+            self.space = "                                    "
+            self.table = "┬─┬"
+            self.xVal=-1
+            self.yVal=0
+            self.zVal=0
+        
     def setDateTime(self):
         self.dtLabel.setText(time.ctime())
     
