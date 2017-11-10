@@ -299,7 +299,7 @@
      <rect>
       <x>450</x>
       <y>0</y>
-      <width>171</width>
+      <width>221</width>
       <height>31</height>
      </rect>
     </property>
@@ -315,7 +315,7 @@
    <widget class="QLCDNumber" name="stockLCD">
     <property name="geometry">
      <rect>
-      <x>733</x>
+      <x>700</x>
       <y>30</y>
       <width>151</width>
       <height>23</height>
@@ -341,7 +341,7 @@
    <widget class="QLabel" name="investLabel">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>460</x>
       <y>30</y>
       <width>111</width>
       <height>21</height>
@@ -359,9 +359,9 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>730</x>
+      <x>699</x>
       <y>5</y>
-      <width>80</width>
+      <width>111</width>
       <height>21</height>
      </rect>
     </property>
@@ -400,8 +400,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>350</y>
+      <x>450</x>
+      <y>340</y>
       <width>114</width>
       <height>33</height>
      </rect>
@@ -414,14 +414,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Risk:</string>
+     <string>Portfolio Risk:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>350</y>
+      <x>640</x>
+      <y>340</y>
       <width>161</width>
       <height>33</height>
      </rect>
@@ -434,15 +434,15 @@
      </font>
     </property>
     <property name="text">
-     <string>Correlation:</string>
+     <string>Portlio Correlation:</string>
     </property>
    </widget>
    <widget class="QLabel" name="riskValue">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>350</y>
-      <width>61</width>
+      <x>450</x>
+      <y>370</y>
+      <width>141</width>
       <height>33</height>
      </rect>
     </property>
@@ -473,8 +473,8 @@
    <widget class="QLabel" name="correlationValue">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>350</y>
+      <x>640</x>
+      <y>370</y>
       <width>161</width>
       <height>33</height>
      </rect>
@@ -520,9 +520,9 @@
    <widget class="QLabel" name="fliptable">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>200</x>
       <y>0</y>
-      <width>221</width>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
@@ -537,31 +537,6 @@
      <string/>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>914</width>
-     <height>47</height>
-    </rect>
-   </property>
-   <property name="defaultUp">
-    <bool>false</bool>
-   </property>
-   <widget class="QMenu" name="menu1">
-    <property name="title">
-     <string>Main</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuAllocater">
-    <property name="title">
-     <string>Allocater</string>
-    </property>
-   </widget>
-   <addaction name="menu1"/>
-   <addaction name="menuAllocater"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

@@ -187,7 +187,7 @@ class Ui_InvestmentDialog(QDialog, ui_IV):
             convArr = StockReader.covMatrix(sgm)
             weight = StockReader.getWeightage()
             risk = StockReader.portfolioRisk(convArr,weight)
-            main.riskValue.setText(str(risk)[1:8])
+            main.riskValue.setText(float(str(risk)[1:8])*100 + "%")
             correlation = StockReader.portfolioCorrelation(convArr,risk,weight)
             main.correlationValue.setText(str(correlation)[1:8])
             
