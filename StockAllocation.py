@@ -31,6 +31,7 @@ def getInvestDecision(StockMap, selection, Amount):
         PercentageMap.update({k:Weightage})
     
     global PercentageGlobalMap
+    PercentageGlobalMap.clear()
     PercentageGlobalMap = PercentageMap 
     #print (PercentageMap)
 

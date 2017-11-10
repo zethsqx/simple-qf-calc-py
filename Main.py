@@ -8,6 +8,7 @@ import SearchStock
 import multiprocessing
 import pyqtgraph as pg
 import matplotlib.pyplot as plt
+import datetime
 from CustomExceptions import *
 
 QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -25,6 +26,11 @@ class Ui_MainWindow(QMainWindow, ui_MW):
         self.investButton.clicked.connect(self.openInvestmentDialog)
         self.portfolioTable.itemDoubleClicked.connect(self.showGraph)
     
+    #def setDateTime(self):
+        #while True:
+            #now = datetime.datetime.now()
+            #self.datetimeLabel.setText("1")
+    
     def openStockDialog(self):
         self.dialog = None
         try:
@@ -32,7 +38,7 @@ class Ui_MainWindow(QMainWindow, ui_MW):
             self.dialog.show()
         except ApplicationException:
             self.msg = QMessageBox.question(self,'No Stock Found',"Sorry, we couldn't find what you were looking for.", QMessageBox.Ok   )
-            self.msg.show()
+            #self.msg.show()
 
 
     def openInvestmentDialog(self):
@@ -41,9 +47,12 @@ class Ui_MainWindow(QMainWindow, ui_MW):
             self.dialog.show()
         except ApplicationException:
             self.msg = QMessageBox.question(self, 'Not enough stock', "You are assigning more stocks than what you have on your list.",QMessageBox.Ok)
-            self.msg.show()
+            #self.msg.show()
 
     def deleteStock(self):
+        index = self.portfolioTable.selectedIndexes()
+        symbol = index[1].data()
+        StockReader.stockGlobalMap.pop(symbol, None)
         if self.portfolioTable.itemClicked:
             self.portfolioTable.removeRow(self.portfolioTable.currentRow())
             for i in range(0, self.portfolioTable.rowCount()):
@@ -108,7 +117,7 @@ class Ui_StockDialog(QDialog, ui_SL):
                 return self.accept()
             except:
                 self.msg = QMessageBox.question(self, 'API Call limit',"Please wait a while...", QMessageBox.Ok)
-                self.msg.show()
+                #self.msg.show()
             
     def closeDialog(self):
         return self.accept()
@@ -142,18 +151,20 @@ class Ui_InvestmentDialog(QDialog, ui_IV):
                 main.investTable.setItem(i, 1, QTableWidgetItem(str(v)))
                 i += 1
 
-            sgm = StockReader.stockGlobalMap
+            sgm = {}
+            for k,v in resultDict.items():
+                sgm.update({k: StockReader.stockGlobalMap.get(str(k))})
             convArr = StockReader.covMatrix(sgm)
             weight = StockReader.getWeightage()
             risk = StockReader.portfolioRisk(convArr,weight)
-            print(risk)
+            main.riskValue.setText(str(risk)[1:8])
             correlation = StockReader.portfolioCorrelation(convArr,risk,weight)
-            print(correlation)
+            main.correlationValue.setText(str(correlation)[1:8])
             
             return self.accept()
         except IndexError:
             self.msg = QMessageBox.question(self, 'Not Enough Stocks', "You do not have enough stocks", QMessageBox.Ok)
-            self.msg.show()
+            #self.msg.show()
     
     def changeValue(self):
         global CURRDIAL
