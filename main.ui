@@ -401,7 +401,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>340</y>
+      <y>330</y>
       <width>114</width>
       <height>33</height>
      </rect>
@@ -414,14 +414,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Portfolio Risk:</string>
+     <string>Portfolio Risk (%):</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>340</y>
+      <y>330</y>
       <width>161</width>
       <height>33</height>
      </rect>
@@ -441,7 +441,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>370</y>
+      <y>360</y>
       <width>141</width>
       <height>33</height>
      </rect>
@@ -474,7 +474,7 @@
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>370</y>
+      <y>360</y>
       <width>161</width>
       <height>33</height>
      </rect>
