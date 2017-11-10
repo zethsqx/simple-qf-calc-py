@@ -103,6 +103,7 @@ class Ui_MainWindow(QMainWindow, ui_MW):
         index = self.portfolioTable.selectedIndexes()
         symbol = index[1].data()
         ts = StockReader.getStockDF(symbol).plot()
+        plt.yscale('log')
         plt.show()
 
 # Dialog for selecting the stock
