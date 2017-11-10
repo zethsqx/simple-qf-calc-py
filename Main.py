@@ -193,10 +193,11 @@ class Ui_InvestmentDialog(QDialog, ui_IV):
             main.correlationValue.setText(str(correlation)[1:8])
             
             return self.accept()
-        except IndexError:
-            self.msg = QMessageBox.question(self, 'Not Enough Stocks', "You do not have enough stocks", QMessageBox.Ok)
+			
+        except (IndexError,ValueError):
+            self.msg = QMessageBox.question(self, 'Invalid User Input', "Please validate your input!(╯°□°)╯︵┻━┻", QMessageBox.Ok)
             #self.msg.show()
-    
+			
     def changeValue(self):
         global CURRDIAL
         if self.stockDial.value() > CURRDIAL:
